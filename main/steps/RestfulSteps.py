@@ -16,11 +16,11 @@ class RestfulSteps:
     def setHeaders(self, headers):
         restfulSubSteps.setHeaders(headers)
 
-    def sentRequest(self):
-        restfulSubSteps.sentRequest()
+    def sentRequest(self, api_request_context):
+        restfulSubSteps.sentRequest(api_request_context)
 
-    def getHTTPCode(self):
-        return restfulSubSteps.getHTTPCode()
+    def verifyResponseCodeEqualsValue(self, value):
+        restfulSubSteps.verifyResponseCodeEqualsValue(value)
 
     def getSingleValueFromJsonPath(self, jsonPath):
         return restfulSubSteps.getSingleValueFromJsonPath(jsonPath)

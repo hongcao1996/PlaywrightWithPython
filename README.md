@@ -43,3 +43,13 @@ curl --location 'https://api.todoist.com/rest/v2/sections' \
 --data '{"project_id":"2203306141", "name":"Groceries"}'
 response:
 { "id": "116074868", "project_id": "2308134158", "order": 3, "name": "Groceries" }
+
+
+
+How to run:
+1. each test case(.py file - function having "test_" or "_test")
+pytest ..\PlaywrightWithPython\test\POST02_CreateASection.py -s --alluredir=allure_report
+-s : show log(all print())
+--alluredir=allure_report: generate log for allure
+2. show allure-report:
+allure serve ..\PlaywrightWithPython\allure_report
