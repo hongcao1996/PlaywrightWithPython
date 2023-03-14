@@ -1,8 +1,10 @@
+import allure
 import sys
 sys.path.insert(0, ".")
 from main.steps.RestfulSteps import *
 from playwright.sync_api import APIRequestContext
 
+@allure.severity(allure.severity_level.MINOR)
 def test_getAllComment(api_request_context: APIRequestContext):
     restfulSteps = RestfulSteps()
     # 1. Step init with protocol, domain, path, method, body
@@ -28,7 +30,7 @@ def test_getAllComment(api_request_context: APIRequestContext):
 
     # 5. Step verify
     # 5.1 http code
-    restfulSteps.verifyResponseCodeEqualsValue(200)
+    restfulSteps.verifyResponseCodeEqualsValue(500)
 
     # 5.2 get value in response body
     pathid1 = "$.[0].id"

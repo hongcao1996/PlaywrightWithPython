@@ -4,22 +4,27 @@ sys.path.insert(0, ".")
 from main.models.restful.WSComponents import *
 from typing import Generator
 import pytest
+import playwright
 from playwright.sync_api import Playwright, APIRequestContext, expect
 
-@pytest.fixture(scope="session")
-def api_request_context(
-    playwright: Playwright,
-) -> Generator[APIRequestContext, None, None]:
-    request_context = playwright.request.new_context()
-    yield request_context
-    request_context.dispose()
+# @pytest.fixture(scope="session")
+# def api_request_context(
+#     playwright: Playwright,
+# ) -> Generator[APIRequestContext, None, None]:
+#     request_context = playwright.request.new_context()
+#     yield request_context
+#     request_context.dispose()
+api_request_context = playwright.request.new_context()
+# from playwright.sync_api import sync_playwright
+# with sync_playwright() as p:
+#     api_request_context = p.request.new_context()
 
 wsComponents = WSComponents()
 response = ""
-context = None
+# context = None
 
 
-class RestfulSubSteps():
+class SubSteps():
 
     def initRequest(self, protocol, domain, path, method, body) -> None:
         # set uri
@@ -46,7 +51,7 @@ class RestfulSubSteps():
 
     # do GET request
     def getRequest(self, api_request_context: APIRequestContext):
-        return api_request_context.get(wsComponents.getUri(), params=wsComponents.getParameters(),
+        return  api_request_context.get(wsComponents.getUri(), params=wsComponents.getParameters(),
                            headers=wsComponents.getHeaders())
 
     # do POST request
@@ -54,15 +59,17 @@ class RestfulSubSteps():
         return api_request_context.post(wsComponents.getUri(), data=wsComponents.getBody(),
                             headers=wsComponents.getHeaders())
 
-    def sentRequest(self, api_request_context: APIRequestContext) -> None:
+    def sentRequest(self) -> None:
         method = wsComponents.getMethod().upper()
         global response
-        if (method == "GET"):
+        if ("GET" in method):
+            print("api_request_context: ",api_request_context)
             response = self.getRequest(api_request_context)
-        elif (method == "POST"):
+        elif ("POST" in method):
             response = self.postRequest(api_request_context)
         else:
             print("new method!!!")
+            response = self.getRequest(api_request_context)
         # print("request: ", requests)
         print("response: ", response.text)
 

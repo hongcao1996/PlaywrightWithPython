@@ -53,3 +53,13 @@ pytest ..\PlaywrightWithPython\test\POST02_CreateASection.py -s --alluredir=allu
 --alluredir=allure_report: generate log for allure
 2. show allure-report:
 allure serve ..\PlaywrightWithPython\allure_report
+3. clean report
+allure generate --clean --output ..\PlaywrightWithPython\allure_report
+
+Run Behave - Python
+behave --no-capture // -> to print output
+config settings.json to navigate step definitions
+
+Run Behave - Allure
+behave -f allure_behave.formatter:AllureFormatter -o reports/​​ ..\PlaywrightWithPython\features\test.feature
+allure serve ..\PlaywrightWithPython\reports 
